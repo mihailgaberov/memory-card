@@ -1,7 +1,19 @@
 .container {
   display: grid;
   gap: 1rem 1rem;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto; /* Default: one column for mobile-first */
   background-color: #2196f3;
   padding: 0.7rem;
+}
+
+@media (min-width: 481px) {
+  .container {
+    grid-template-columns: auto auto; /* Two columns for tablets and up */
+  }
+}
+
+@media (min-width: 769px) {
+  .container {
+    grid-template-columns: auto auto auto; /* Three columns for desktops and larger */
+  }
 }
