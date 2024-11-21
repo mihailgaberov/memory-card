@@ -5,22 +5,23 @@ export default function useFetch() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://api.nekosia.cat/api/v1/images/catgril?count=21&additionalTags=white-hair,uniform&blacklistedTags=short-hair,sad,maid"
-        );
-        if (!response.ok) throw new Error("Failed to fetch data");
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    console.log(">>> fetching data");
+    try {
+      const response = await fetch(
+        "https://api.nekosia.cat/api/v1/images/catgril?count=21&additionalTags=white-hair,uniform&blacklistedTags=short-hair,sad,maid"
+      );
+      if (!response.ok) throw new Error("Failed to fetch data");
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -28,5 +29,6 @@ export default function useFetch() {
     data,
     loading,
     error,
+    fetchData,
   };
 }
