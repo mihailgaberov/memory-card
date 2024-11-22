@@ -3,6 +3,7 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 import Card from "../Card";
 
 import styles from "./CardsGrid.module.scss";
+import useFetch from "../../hooks/useFetch";
 
 const getKey = () => crypto.randomUUID();
 
@@ -11,6 +12,7 @@ function CardsGrid(data) {
   const [clickedImages, setClickedImages] = useState([]);
   const [score, setScore] = useLocalStorage("score", 0);
   const [bestScore, setBestScore] = useLocalStorage("bestScore", 0);
+  const { fetchData } = useFetch();
 
   function processTurn(imageId) {
     // Store the clicked image ID
@@ -23,6 +25,7 @@ function CardsGrid(data) {
         setScore(0);
 
         // TODO: another API call to fetch new batch of images
+        fetchData(); // doesn't work atm
       }
     } else {
       console.info("Good choice! Update increment the current score.");
