@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import Card from "../Card";
 
 import styles from "./CardsGrid.module.scss";
@@ -8,14 +9,26 @@ const getKey = () => crypto.randomUUID();
 function CardsGrid(data) {
   const [images, setImages] = useState(data?.data?.images);
   const [clickedImages, setClickedImages] = useState([]);
+  const [score, setScore] = useLocalStorage("score", 0);
+  const [bestScore, setBestScore] = useLocalStorage("bestScore", 0);
 
-  function shuffleArray(imageId) {
+  function processTurn(imageId) {
     // Store the clicked image ID
     setClickedImages([...clickedImages, imageId]);
 
     if (clickedImages.includes(imageId)) {
-      console.log(">>> KABOOM duplicated clicked!");
+      console.info("Duplicate detected. Reset score and update best score.");
+      if (score > bestScore) {
+        setBestScore(score);
+        setScore(0);
+
+        // TODO: another API call to fetch new batch of images
+      }
+    } else {
+      console.info("Good choice! Update increment the current score.");
+      setScore((old) => old + 1);
     }
+
     // Create a copy of the original array to avoid mutating it
     const shuffled = [...images];
 
@@ -40,7 +53,7 @@ function CardsGrid(data) {
           imgUrl={item?.image?.original?.url}
           imageId={item?.id}
           categoryName={item?.category}
-          randomizeOrder={(imageId) => shuffleArray(imageId)}
+          processTurn={(imageId) => processTurn(imageId)}
         />
       ))}
     </div>

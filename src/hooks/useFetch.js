@@ -6,7 +6,6 @@ export default function useFetch() {
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
-    console.log(">>> fetching data");
     try {
       const response = await fetch(
         "https://api.nekosia.cat/api/v1/images/catgril?count=21&additionalTags=white-hair,uniform&blacklistedTags=short-hair,sad,maid"
