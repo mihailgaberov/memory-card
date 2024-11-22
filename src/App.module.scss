@@ -1,7 +1,13 @@
+@font-face {
+  font-family: "Popcat";
+  src: url("/Popcat.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .container {
   margin: 1rem auto;
   padding: 1rem;
 
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: Popcat, sans-serif;
 }

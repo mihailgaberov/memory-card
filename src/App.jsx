@@ -4,6 +4,7 @@ import Header from "./components/Header";
 
 import styles from "./App.module.scss";
 import useFetch from "./hooks/useFetch";
+import Subtitle from "./components/Subtitle/Subtitle";
 
 function App() {
   const { data, loading, error } = useFetch();
@@ -14,6 +15,7 @@ function App() {
   return (
     <div className={styles.container}>
       <Header />
+      <Subtitle />
       <CardsGrid data={data} />
     </div>
   );

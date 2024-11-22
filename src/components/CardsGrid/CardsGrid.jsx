@@ -7,8 +7,15 @@ const getKey = () => crypto.randomUUID();
 
 function CardsGrid(data) {
   const [images, setImages] = useState(data?.data?.images);
+  const [clickedImages, setClickedImages] = useState([]);
 
-  function shuffleArray() {
+  function shuffleArray(imageId) {
+    // Store the clicked image ID
+    setClickedImages([...clickedImages, imageId]);
+
+    if (clickedImages.includes(imageId)) {
+      console.log(">>> KABOOM duplicated clicked!");
+    }
     // Create a copy of the original array to avoid mutating it
     const shuffled = [...images];
 
@@ -21,7 +28,7 @@ function CardsGrid(data) {
         shuffled[i],
       ];
     }
-    console.log(">>> shuffled: ", shuffled);
+
     setImages(shuffled);
   }
 
@@ -31,8 +38,9 @@ function CardsGrid(data) {
         <Card
           key={getKey()}
           imgUrl={item?.image?.original?.url}
+          imageId={item?.id}
           categoryName={item?.category}
-          randomizeOrder={shuffleArray}
+          randomizeOrder={(imageId) => shuffleArray(imageId)}
         />
       ))}
     </div>
