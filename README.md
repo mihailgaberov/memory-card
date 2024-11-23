@@ -1,4 +1,23 @@
-# Memory Card
+# Memory Card Game 🎮
 
-The application includes a scoreboard, which counts the current score, and a “Best Score”, which shows the highest score you’ve achieved thus far. There is a function that displays the cards in a random order anytime a user clicks one. That function is invoked when the component mounts.
-There are handful of cards that display images and informational text. These images and texts are fetched from an external API. We use Giphy API for this. Certain level of styiling is applied to make the app look nice and sleek.
+A challenging and engaging memory card game built with React that puts your recall abilities to the test! In this game, your goal is to click on unique cat images while avoiding clicking the same image twice. Each successful unique click increases your score, but beware - clicking an image twice will reset your progress!
+
+## Features
+- 🎯 Dynamic gameplay that challenges your memory
+- 🔄 Cards shuffle after each click to increase difficulty
+- 🏆 Score tracking with best score persistence
+- 😺 Adorable cat images from The Cat API
+- ✨ Smooth loading transitions and animations
+- 📱 Responsive design for all devices
+- 🎨 Clean, modern UI
+
+Test your memory skills while enjoying cute cat pictures! Can you achieve the perfect score? 
+
+## How to Play
+1. Click on any card to start
+2. Remember which cards you've clicked
+3. Try to click all cards exactly once
+4. Watch your score grow with each unique selection
+5. Beat your best score!
+
+Perfect for cat lovers and memory game enthusiasts alike! 🐱
