@@ -21,12 +21,14 @@ function CardsGrid(data) {
     if (fetchedData?.images) {
       setImages(fetchedData.images);
       setIsLoading(false);
+      // Reset clicked images when new batch is loaded
+      setClickedImages([]);
     }
   }, [fetchedData]);
 
   function processTurn(imageId) {
-    // Store the clicked image ID
-    setClickedImages([...clickedImages, imageId]);
+    const newClickedImages = [...clickedImages, imageId];
+    setClickedImages(newClickedImages);
 
     if (clickedImages.includes(imageId)) {
       console.info("Duplicate detected. Reset score and update best score.");
@@ -38,27 +40,39 @@ function CardsGrid(data) {
       // Update the best score if it's bigger
       if (score > bestScore) {
         setBestScore(score);
-        setScore(0);
       }
+      setScore(0);
     } else {
-      console.info("Good choice! Update increment the current score.");
-      setScore((old) => old + 1);
+      const newScore = score + 1;
+      setScore(newScore);
+      
+      // Check if player has clicked all images exactly once
+      if (newClickedImages.length === images.length) {
+        console.info("Perfect score! Loading new batch of images.");
+        setIsLoading(true);
+        fetchData();
+        
+        // Update best score
+        if (newScore > bestScore) {
+          setBestScore(newScore);
+        }
+      } else {
+        // Create a copy of the original array to avoid mutating it
+        const shuffled = [...images];
+
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          // Generate a random index between 0 and i
+          const randomIndex = Math.floor(Math.random() * (i + 1));
+          // Swap the elements
+          [shuffled[i], shuffled[randomIndex]] = [
+            shuffled[randomIndex],
+            shuffled[i],
+          ];
+        }
+
+        setImages(shuffled);
+      }
     }
-
-    // Create a copy of the original array to avoid mutating it
-    const shuffled = [...images];
-
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      // Generate a random index between 0 and i
-      const randomIndex = Math.floor(Math.random() * (i + 1));
-      // Swap the elements
-      [shuffled[i], shuffled[randomIndex]] = [
-        shuffled[randomIndex],
-        shuffled[i],
-      ];
-    }
-
-    setImages(shuffled);
   }
 
   if (isLoading) {
