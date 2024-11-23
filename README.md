@@ -12,7 +12,7 @@ A challenging and engaging memory card game built with React that puts your reca
 - 📱 Responsive design for all devices
 - 🎨 Clean, modern UI
 
-Test your memory skills while enjoying cute cat pictures! Can you achieve the perfect score?
+Test your memory skills while enjoying cute anime pictures! Can you achieve the perfect score?
 
 ## How to Play
 
