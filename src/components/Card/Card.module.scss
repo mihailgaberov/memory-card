@@ -10,14 +10,25 @@
   text-align: center;
   min-height: 200px;
   position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 
-  img {
-    width: 10rem;
-    height: auto;
-    transition: opacity 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
   }
 
-  :global(.loading) {
+  .image {
+    width: 10rem;
+    height: auto;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
+
+  .loaderContainer {
     position: absolute;
     top: 50%;
     left: 50%;
