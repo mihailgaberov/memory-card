@@ -6,8 +6,10 @@
 }
 
 .container {
-  margin: 1rem auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
   padding: 1rem;
-
   font-family: Popcat, sans-serif;
 }

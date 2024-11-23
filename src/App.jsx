@@ -1,5 +1,6 @@
 import CardsGrid from "./components/CardsGrid";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import styles from "./App.module.scss";
 import Loader from "./components/Loader";
@@ -17,6 +18,7 @@ function App() {
       <Header />
       <Subtitle />
       <CardsGrid data={data} />
+      <Footer />
     </div>
   );
 }

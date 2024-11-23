@@ -1,0 +1,19 @@
+.footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  background-color: #2196f3;
+  color: white;
+  font-size: 1rem;
+  
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+    
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
