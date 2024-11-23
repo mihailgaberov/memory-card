@@ -6,7 +6,7 @@ function Footer() {
   return (
     <footer className={styles.footer}>
       <p>
-        2024{' '}
+      ©2024{' '}
         <a
           href="https://github.com/mihailgaberov"
           target="_blank"
