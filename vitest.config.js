@@ -7,6 +7,14 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/setupTests.js'],
+    css: {
+      modules: {
+        classNameStrategy: 'non-scoped'
+      }
+    },
+    preprocessors: {
+      '**/*.scss': 'sass'
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -18,4 +26,12 @@ export default defineConfig({
       ],
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true,
+        charset: false
+      }
+    }
+  }
 });

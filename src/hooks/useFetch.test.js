@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor, act } from '@testing-library/react';
 import useFetch from './useFetch';
 
 describe('useFetch Hook', () => {
@@ -11,6 +11,12 @@ describe('useFetch Hook', () => {
 
   beforeEach(() => {
     vi.resetAllMocks();
+    // Silence console.info during tests
+    vi.spyOn(console, 'info').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    console.info.mockRestore();
   });
 
   it('initializes with default values', () => {
@@ -95,7 +101,9 @@ describe('useFetch Hook', () => {
     expect(result.current.data).toEqual(firstData);
 
     // Trigger manual fetch
-    result.current.fetchData();
+    await act(async () => {
+      result.current.fetchData();
+    });
 
     await waitFor(() => {
       expect(result.current.data).toEqual(secondData);
