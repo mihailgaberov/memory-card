@@ -10,7 +10,6 @@ export default function useFetch() {
     console.info("Fetching data.");
     
     try {
-      // Request smaller images by adding width parameter
       const response = await fetch(
         "https://api.nekosia.cat/api/v1/images/catgril?count=21&additionalTags=white-hair,uniform&blacklistedTags=short-hair,sad,maid&width=300"
       );
