@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
 import CardsGrid from "./components/CardsGrid";
 import Header from "./components/Header";
 
 import styles from "./App.module.scss";
+import Loader from "./components/Loader";
+import Subtitle from "./components/Subtitle";
 import useFetch from "./hooks/useFetch";
-import Subtitle from "./components/Subtitle/Subtitle";
 
 function App() {
   const { data, loading, error } = useFetch();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
 
   return (

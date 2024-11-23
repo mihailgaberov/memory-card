@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import Card from "../Card";
+import Loader from "../Loader";
 
 import styles from "./CardsGrid.module.scss";
 import useFetch from "../../hooks/useFetch";
@@ -12,12 +13,14 @@ function CardsGrid(data) {
   const [clickedImages, setClickedImages] = useState([]);
   const [score, setScore] = useLocalStorage("score", 0);
   const [bestScore, setBestScore] = useLocalStorage("bestScore", 0);
+  const [isLoading, setIsLoading] = useState(false);
   const { data: fetchedData, fetchData } = useFetch();
 
   // Update images when new data is fetched
   useEffect(() => {
     if (fetchedData?.images) {
       setImages(fetchedData.images);
+      setIsLoading(false);
     }
   }, [fetchedData]);
 
@@ -28,7 +31,8 @@ function CardsGrid(data) {
     if (clickedImages.includes(imageId)) {
       console.info("Duplicate detected. Reset score and update best score.");
 
-      // Do another API call to fetch new batch of images
+      // Set loading state and fetch new images
+      setIsLoading(true);
       fetchData();
 
       // Update the best score if it's bigger
@@ -55,6 +59,10 @@ function CardsGrid(data) {
     }
 
     setImages(shuffled);
+  }
+
+  if (isLoading) {
+    return <Loader message="Loading new images..." />;
   }
 
   return (
