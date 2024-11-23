@@ -21,5 +21,3 @@ Test your memory skills while enjoying cute cat pictures! Can you achieve the pe
 3. Try to click all cards exactly once
 4. Watch your score grow with each unique selection
 5. Beat your best score!
-
-Perfect for cat lovers and memory game enthusiasts alike! 🐱
