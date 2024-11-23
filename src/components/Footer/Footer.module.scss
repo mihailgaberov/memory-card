@@ -1,19 +1,21 @@
 .footer {
-  text-align: center;
   padding: 1rem;
-  margin-top: 2rem;
-  background-color: #2196f3;
-  color: white;
-  font-size: 1rem;
-  
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+
   a {
-    color: white;
+    color: #2196f3;
     text-decoration: none;
-    font-weight: bold;
-    transition: opacity 0.3s ease;
     
     &:hover {
-      opacity: 0.8;
+      text-decoration: underline;
     }
   }
+}
+
+.version {
+  margin-left: 0.5rem;
+  color: #999;
+  font-size: 0.8rem;
 }
