@@ -9,12 +9,12 @@ import useFetch from "../../hooks/useFetch";
 const getKey = () => crypto.randomUUID();
 
 function CardsGrid(data) {
-  const [images, setImages] = useState(data?.data?.images);
+  const [images, setImages] = useState(data?.data?.images || []);
   const [clickedImages, setClickedImages] = useState([]);
   const [score, setScore] = useLocalStorage("score", 0);
   const [bestScore, setBestScore] = useLocalStorage("bestScore", 0);
-  const [isLoading, setIsLoading] = useState(false);
-  const { data: fetchedData, fetchData } = useFetch();
+  const [isLoading, setIsLoading] = useState(!data?.data?.images?.length);
+  const { data: fetchedData, fetchData, error } = useFetch();
 
   // Update images when new data is fetched
   useEffect(() => {
@@ -27,53 +27,44 @@ function CardsGrid(data) {
   }, [fetchedData]);
 
   function processTurn(imageId) {
-    const newClickedImages = [...clickedImages, imageId];
-    setClickedImages(newClickedImages);
-
     if (clickedImages.includes(imageId)) {
-      console.info("Duplicate detected. Reset score and update best score.");
+      // If clicking the same image twice, reset everything
+      setClickedImages([]);
 
-      // Set loading state and fetch new images
-      setIsLoading(true);
-      fetchData();
-
-      // Update the best score if it's bigger
+      // Update the best score if current score is bigger
       if (score > bestScore) {
         setBestScore(score);
       }
+
+      // Reset score to 0
       setScore(0);
+      return;
+    }
+
+    // Handle successful card selection
+    const newScore = score + 1;
+    const newClickedImages = [...clickedImages, imageId];
+    
+    setScore(newScore);
+    setClickedImages(newClickedImages);
+
+    // Update best score immediately if we exceed it
+    if (newScore > bestScore) {
+      setBestScore(newScore);
+    }
+
+    // If we've clicked all images, fetch new ones
+    if (newClickedImages.length === images.length) {
+      fetchData();
+      setClickedImages([]);
     } else {
-      const newScore = score + 1;
-      setScore(newScore);
-      
-      // Check if player has clicked all images exactly once
-      if (newClickedImages.length === images.length) {
-        console.info("Perfect score! Loading new batch of images.");
-        setIsLoading(true);
-        fetchData();
-        
-        // Update best score
-        if (newScore > bestScore) {
-          setBestScore(newScore);
-        }
-      } else {
-        // Create a copy of the original array to avoid mutating it
-        const shuffled = [...images];
-
-        for (let i = shuffled.length - 1; i > 0; i--) {
-          // Generate a random index between 0 and i
-          const randomIndex = Math.floor(Math.random() * (i + 1));
-          // Swap the elements
-          [shuffled[i], shuffled[randomIndex]] = [
-            shuffled[randomIndex],
-            shuffled[i],
-          ];
-        }
-
-        setImages(shuffled);
-      }
+      // Shuffle the images
+      const shuffled = [...images].sort(() => Math.random() - 0.5);
+      setImages(shuffled);
     }
   }
+
+  if (error) return <p>Failed to fetch data</p>;
 
   if (isLoading) {
     return <Loader message="Loading new images..." />;
@@ -84,7 +75,7 @@ function CardsGrid(data) {
       {images.map((item) => (
         <Card
           key={getKey()}
-          imgUrl={item?.image?.original?.url}
+          imgUrl={item?.image?.original?.url || ""}
           imageId={item?.id}
           categoryName={item?.category}
           processTurn={(imageId) => processTurn(imageId)}
