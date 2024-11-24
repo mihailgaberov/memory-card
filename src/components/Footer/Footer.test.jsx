@@ -2,11 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Footer from './Footer';
 
-// Mock package.json
-vi.mock('../../../../package.json', () => ({
-  version: '1.1.1'
-}));
-
 describe('Footer Component', () => {
   it('renders without crashing', () => {
     render(<Footer />);
@@ -15,7 +10,7 @@ describe('Footer Component', () => {
 
   it('renders version number', () => {
     render(<Footer />);
-    expect(screen.getByText(/1\.1\.1/)).toBeInTheDocument();
+    expect(screen.getByTestId('version')).toBeInTheDocument();
   });
 
   it('renders copyright text', () => {

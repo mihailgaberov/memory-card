@@ -14,7 +14,7 @@ function Footer() {
         >
           Mihail Gaberov
         </a>
-        <span className={styles.version}>v{packageJson.version}</span>
+        <span data-testid="version" className={styles.version}>v{packageJson.version}</span>
       </p>
     </footer>
   );
