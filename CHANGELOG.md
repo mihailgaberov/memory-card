@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2024-11-25
+
+### Added
+- Persistent game state using localStorage
+- New test suite for score tracking and game mechanics
+- Best score tracking across sessions
+
+### Changed
+- Optimized score tracking logic
+- Improved state management in CardsGrid component
+- Refactored best score update logic for better maintainability
+- Removed console.log statements for cleaner production code
+
+### Fixed
+- Best score update timing in perfect score scenarios
+- State updates timing in card click handlers
+
 ## [1.1.1] - 2024-11-23
 
 ### Added
