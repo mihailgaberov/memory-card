@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.2.0] - 2024-11-25
+## [1.1.3] - 2024-11-25
 
 ### Added
 - Persistent game state using localStorage
@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - Best score update timing in perfect score scenarios
 - State updates timing in card click handlers
 
-## [1.1.1] - 2024-11-23
+## [1.1.2] - 2024-11-23
 
 ### Added
 - Version number display in footer
@@ -29,7 +29,7 @@ All notable changes to this project will be documented in this file.
 - Improved footer styling with modern color scheme
 - Adjusted footer text sizes for better readability
 
-## [1.1.0] - 2024-11-23
+## [1.1.1] - 2024-11-23
 
 ### Added
 - Loading states for better UX
