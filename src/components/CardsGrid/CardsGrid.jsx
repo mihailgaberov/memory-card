@@ -10,7 +10,7 @@ const getKey = () => crypto.randomUUID();
 
 function CardsGrid(data) {
   const [images, setImages] = useState(data?.data?.images || []);
-  const [clickedImages, setClickedImages] = useState([]);
+  const [clickedImages, setClickedImages] = useLocalStorage("clickedImages", []);
   const [score, setScore] = useLocalStorage("score", 0);
   const [bestScore, setBestScore] = useLocalStorage("bestScore", 0);
   const [isLoading, setIsLoading] = useState(!data?.data?.images?.length);
@@ -26,41 +26,39 @@ function CardsGrid(data) {
     }
   }, [fetchedData]);
 
-  function processTurn(imageId) {
-    if (clickedImages.includes(imageId)) {
-      // If clicking the same image twice, reset everything
-      setClickedImages([]);
-
-      // Update the best score if current score is bigger
-      if (score > bestScore) {
-        setBestScore(score);
-      }
-
-      // Reset score to 0
-      setScore(0);
-      return;
+  function updateBestScore(currentScore) {
+    if (currentScore > bestScore) {
+      setBestScore(currentScore);
     }
+  }
 
-    // Handle successful card selection
-    const newScore = score + 1;
+  function processTurn(imageId) {
     const newClickedImages = [...clickedImages, imageId];
-    
-    setScore(newScore);
     setClickedImages(newClickedImages);
 
-    // Update best score immediately if we exceed it
-    if (newScore > bestScore) {
-      setBestScore(newScore);
-    }
+    // If clicking the same image twice, reset everything
+    if (clickedImages.includes(imageId)) {
 
-    // If we've clicked all images, fetch new ones
-    if (newClickedImages.length === images.length) {
-      fetchData();
+      // Update the best score if necessary
+      updateBestScore(score);
+      
       setClickedImages([]);
+      setScore(0);
     } else {
-      // Shuffle the images
-      const shuffled = [...images].sort(() => Math.random() - 0.5);
-      setImages(shuffled);
+      // Handle successful card selection
+      const newScore = score + 1;
+      setScore(newScore);
+
+      // If we've clicked all images, fetch new ones
+      if (newClickedImages.length === images.length) {
+        updateBestScore(newScore);
+        fetchData();
+        setClickedImages([]);
+      } else {
+        // Shuffle the images
+        const shuffled = [...images].sort(() => Math.random() - 0.5);
+        setImages(shuffled);
+      }
     }
   }
 

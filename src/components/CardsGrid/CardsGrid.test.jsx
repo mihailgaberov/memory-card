@@ -5,13 +5,16 @@ import CardsGrid from './CardsGrid';
 // Mock hooks
 const mockSetScore = vi.fn();
 const mockSetBestScore = vi.fn();
+const mockSetClickedImages = vi.fn();
 let mockScore = 0;
 let mockBestScore = 0;
+let mockClickedImages = []
 
 vi.mock('@uidotdev/usehooks', () => ({
   useLocalStorage: (key, initialValue) => {
     if (key === 'score') return [mockScore, mockSetScore];
     if (key === 'bestScore') return [mockBestScore, mockSetBestScore];
+    if (key === 'clickedImages') return [mockClickedImages, mockSetClickedImages];
     return [initialValue, vi.fn()];
   }
 }));
@@ -202,9 +205,10 @@ describe('CardsGrid Component', () => {
     });
 
     it('updates best score when current score exceeds it', async () => {
-      mockScore = 5;
+      mockScore = 6;
       mockBestScore = 3;
-      
+      mockClickedImages = ["1", "2"];
+
       const mockProps = {
         data: {
           images: [
@@ -230,6 +234,8 @@ describe('CardsGrid Component', () => {
 
     it('resets score when clicking same card twice', async () => {
       mockScore = 3;
+      mockClickedImages = ["1", "1", "2"];
+      
       const mockProps = {
         data: {
           images: [
@@ -252,24 +258,25 @@ describe('CardsGrid Component', () => {
       });
     });
 
-    // it('fetches new images on perfect score', async () => {
-    //   const mockProps = {
-    //     data: {
-    //       images: [
-    //         { id: '1', image: { original: { url: 'test1.jpg' } } },
-    //         { id: '2', image: { original: { url: 'test2.jpg' } } }
-    //       ]
-    //     }
-    //   };
-    //   render(<CardsGrid {...mockProps} />);
-    //   const cards = screen.getAllByRole('img');
+    it('fetches new images on perfect score', async () => {
+      mockClickedImages = [];
+
+      const mockProps = {
+        data: {
+          images: [
+            { id: '1', image: { original: { url: 'test1.jpg' } } },
+          ]
+        }
+      };
+      render(<CardsGrid {...mockProps} />);
+      const cards = screen.getAllByRole('img');
       
-    //   // Click all cards once
-    //   cards.forEach(card => fireEvent.click(card));
+      // Click all cards once
+      cards.forEach(card => fireEvent.click(card));
       
-    //   await waitFor(() => {
-    //     expect(mockFetchData.fetchData).toHaveBeenCalled();
-    //   });
-    // });
+      await waitFor(() => {
+        expect(mockFetchData.fetchData).toHaveBeenCalled();
+      });
+    });
   });
 });
