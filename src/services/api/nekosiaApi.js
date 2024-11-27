@@ -1,4 +1,4 @@
-const NEKOSIA_API_URL = "https://api.nekosia.cat/api/v1/images/catgril";
+const NEKOSIA_API_URL = "https://api.nekosia.cat/api/v1/images/catgirl";
 
 export async function fetchNekosiaImages() {
   const response = await fetch(
