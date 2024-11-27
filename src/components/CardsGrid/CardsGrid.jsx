@@ -10,7 +10,10 @@ const getKey = () => crypto.randomUUID();
 
 function CardsGrid(data) {
   const [images, setImages] = useState(data?.data?.images || []);
-  const [clickedImages, setClickedImages] = useLocalStorage("clickedImages", []);
+  const [clickedImages, setClickedImages] = useLocalStorage(
+    "clickedImages",
+    []
+  );
   const [score, setScore] = useLocalStorage("score", 0);
   const [bestScore, setBestScore] = useLocalStorage("bestScore", 0);
   const [isLoading, setIsLoading] = useState(!data?.data?.images?.length);
@@ -38,10 +41,9 @@ function CardsGrid(data) {
 
     // If clicking the same image twice, reset everything
     if (clickedImages.includes(imageId)) {
-
       // Update the best score if necessary
       updateBestScore(score);
-      
+
       setClickedImages([]);
       setScore(0);
     } else {
@@ -62,7 +64,9 @@ function CardsGrid(data) {
     }
   }
 
-  if (error) return <p>Failed to fetch data</p>;
+  if (error) {
+    return <p>Failed to fetch data</p>;
+  }
 
   if (isLoading) {
     return <Loader message="Loading new images..." />;
